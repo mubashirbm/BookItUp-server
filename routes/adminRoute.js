@@ -1,6 +1,6 @@
-// const express = require('express')
+
 import express  from 'express';
-// import userModel from '../models/userModel.js';
+
 
 const router = express.Router()
 import * as controller from '../controllers/adminController.js';
@@ -10,10 +10,15 @@ import hotelModel from '../models/hotelModel.js';
 
 router.route("/addHotel").post(controller.addHotel)
 router.route("/getAllHotel").get(controller.getAllHotel)
+router.route("/login").post(controller.login)
+// router.route("delete").post(controller.delete)
 
 
-
-
+router.route("/getAllUser").get(controller.getUsers)
+router.route('/changeStatus/:status/:userId').get(controller.changeStatus)
+router.route("/getAllUsers").get(controller.getUsers)
+router.route('/deleteHotel/:hotelId').post(controller.deleteHotel)
+router.route('getHotelById/:hotelId').get(controller.hotelById)
 
 
 

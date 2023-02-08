@@ -7,9 +7,9 @@ export const hotelSchema= new mongoose.Schema({
     },
     location:{
         type:String,
-        required:true
+    
     },
-    rentPerDay:{
+    category:{
         type:String
         
     },
@@ -18,7 +18,7 @@ export const hotelSchema= new mongoose.Schema({
         required:true
     },
     imageUrls:[],
-    currentBookings:[],
+   
    
 },
 {

@@ -1,24 +1,22 @@
 import express  from 'express';
-// import { Router } from "express";
+
 const router = express.Router();
 import * as controller from '../controllers/controller.js';
 import userModel from '../models/userModel.js';
 import authMiddleware from '../middlewares/authMiddleware.js';
-// const User = require("../models/userModel");
-
-
-
-
-
-
-
-
 
 
 
 router.route("/register").post(controller.register)
-
 router.route("/login").post(controller.login)
+
+
+
+
+
+
+
+
 
 
 

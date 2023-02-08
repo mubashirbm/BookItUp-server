@@ -21,7 +21,6 @@ const port = process.env.PORT || 5000;
 
 /** api routes */
 app.use('/api', userRouter)
-
 app.use('/admin',adminRouter)
 
 
@@ -37,7 +36,5 @@ connect().then(()=>{
     console.log("invalid db connection")
 })
 
-// app.use('/api/user',userRoute)
-// app.use('/api/admin',adminRoute)
 
 app.listen(port,()=>{console.log(`nodeserver started at port ${port} `)})
