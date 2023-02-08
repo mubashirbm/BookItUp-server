@@ -34,7 +34,16 @@ export async function addHotel(req,res){
 
 export async function hotelById(req,res){
   console.log("reeeech")
-  console.log(req.body,"req.body")
+  console.log(req.params,"req.body")
+  const hotelId=req.params.hotelId
+  console.log(hotelId,"kkkkkkkkkkkkkkkkkkkkkkk")
+  try {
+    const data= await hotelSchema.findOne({_id:hotelId})
+    console.log(data,"hooooooooooooooooooootel")
+    res.json(data)
+  } catch (error) {
+    console.log(error)
+  }
   // const {data}=await 
 
 }
@@ -163,4 +172,33 @@ export async function login(req,res){
       console.log(error);
     }
   };
+
+  export const updateHotel = async(req,res)=>{
+ const {id,hotel,location,description,category,imageUrls:imageUrl} = req.body
+    console.log(req.params,"ooooooooooooooooooo")
+    console.log(hotel,location,description,category,"11111111111111111111111oooo")
+   
+    try {
+      const result = await hotelSchema
+          .updateMany(
+            { _id: id },
+            {
+              $set: {
+              hotel:hotel,
+              location:location,
+              description:description,
+              category,
+              imageUrls: imageUrl,
+                    },
+            }
+          )
+          console.log(result);
+            res.status(200).json({ status: true , result });
+          // .then((data) => {
+            // }).catch((err) => {console.log(err,'err');})
+          } catch (error) {
+        console.log(error);
+      }
+    
+  } 
   

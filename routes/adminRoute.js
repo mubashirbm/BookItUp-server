@@ -18,7 +18,8 @@ router.route("/getAllUser").get(controller.getUsers)
 router.route('/changeStatus/:status/:userId').get(controller.changeStatus)
 router.route("/getAllUsers").get(controller.getUsers)
 router.route('/deleteHotel/:hotelId').post(controller.deleteHotel)
-router.route('getHotelById/:hotelId').get(controller.hotelById)
+router.route('/getHotelById/:hotelId').get(controller.hotelById)
+router.route('/updateHotel').post(controller.updateHotel)
 
 
 
