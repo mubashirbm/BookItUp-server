@@ -9,6 +9,8 @@ import authMiddleware from '../middlewares/authMiddleware.js';
 
 router.route("/register").post(controller.register)
 router.route("/login").post(controller.login)
+router.route("/getHotelByCity/:city").get(controller.getHotelByCity)
+router.route("/hotelDetails/:Id").get(controller.hotelDetails)
 
 
 

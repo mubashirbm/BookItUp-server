@@ -3,6 +3,7 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import userSchema from '../models/userModel.js';
 import authMiddleware from '../middlewares/authMiddleware.js';
+import hotelSchema from '../models/hotelModel.js';
 
 export async function register(req,res){
   try {
@@ -111,3 +112,28 @@ export async function login(req,res){
 //   }
 
 // }
+export async function getHotelByCity (req,res){
+  console.log(req.params.city,"body")
+  const city=req.params.city
+try {
+  const data= await hotelSchema.find({location:city}) 
+  console.log(data)
+  return res.send(data)
+} catch (error) {
+  console.log(error)
+  
+  
+}
+  
+}
+export async function hotelDetails (req,res){
+  const Id=req.params.Id
+  console.log(Id,"Idd")
+  try {
+    const data=await hotelSchema.findOne({_id:Id})
+    console.log(data,"after Id ")
+    return res.send(data)
+  } catch (error) {
+    
+  }
+}
