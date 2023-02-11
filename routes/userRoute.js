@@ -11,6 +11,7 @@ router.route("/register").post(controller.register)
 router.route("/login").post(controller.login)
 router.route("/getHotelByCity/:city").get(controller.getHotelByCity)
 router.route("/hotelDetails/:Id").get(controller.hotelDetails)
+router.route("/RoomDetails/:Id").get(controller.roomDetails)
 
 
 
@@ -95,6 +96,26 @@ router.route("/hotelDetails/:Id").get(controller.hotelDetails)
 // router.route("/get-user-info-by-id").post(controller.authMiddleware)
 
 router.post("/get-user-info-by-id",authMiddleware, async(req,res)=>{
+  console.log("000000000000000000000000")
+  try {
+    const user = await userModel.findOne({_id:req.body.userId})
+    user.password = undefined;
+    if(!user){
+      return res
+      .status(200)
+      .send({message:"user does not exixt",success:false})
+    }else{
+      res.status(200).send({success:true,
+        data:user
+      })
+    }
+  } catch (error) {
+    res.status(500)
+    .send({message:"error getting user info",success:false, error})
+  }
+})
+router.post("/get-admin-info-by-id",authMiddleware, async(req,res)=>{
+  console.log("000000000000000000000000")
   try {
     const user = await userModel.findOne({_id:req.body.userId})
     user.password = undefined;

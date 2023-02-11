@@ -13,11 +13,14 @@ export const hotelSchema= new mongoose.Schema({
         type:String
         
     },
+    rooms:{
+        type:[String]
+    },
     description:{
         type:String,
         required:true
     },
-    imageUrls:[],
+    images:[],
    
    
 },

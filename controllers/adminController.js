@@ -2,6 +2,7 @@
 import authMiddleware from '../middlewares/authMiddleware.js';
 import hotelSchema from '../models/hotelModel.js';
 import  userSchema from '../models/userModel.js';
+import roomSchema from '../models/roomModel.js';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import mongoose from 'mongoose';
@@ -25,6 +26,39 @@ export async function addHotel(req,res){
             res.send({message:"new hotel added succesfully"})
             
         }
+        
+    } catch (error) {
+        console.log(error)
+        return res.status(400).json({error})
+    }
+}
+export async function addRoom(req,res){
+  console.log(req.body,6666666666);
+  console.log(req.body,"body Room")
+  console.log(req.params,"params Room")
+  const room=req.body
+  const hotelId=req.params.Id
+    try {
+      const newRoom = new roomSchema(req.body)
+      console.log(newRoom,"newRoom")
+      await newRoom.save()
+      // try {
+        await hotelSchema.findByIdAndUpdate(hotelId, {
+          $push: { rooms: newRoom._id },
+        });
+        res.send({message:"new Room added succesfully"})
+        
+      // } 
+        // const exist=hotelSchema.findOne({name:req.body.Room})
+        // console.log(exist,"mmmmmmm")
+        
+        // if(!exist){
+            // return res
+            // .status(200)
+            // .send({ message: "Hotel already exists", success: false });
+        // }if(exist){
+
+        // }
         
     } catch (error) {
         console.log(error)
@@ -64,6 +98,22 @@ export async function deleteHotel(req,res){
     console.log("not deleted")
   }
 }
+export async function deleteRoom(req,res){
+  console.log("deleting back")
+  // console.log(req.params)
+  try {
+    const roomId=req.params.roomId
+
+    
+    console.log(roomId)
+     await roomSchema.deleteOne({_id:roomId})
+  
+    res.send({status:true})
+  } catch (error) {
+    console.log(error)
+    console.log("not deleted")
+  }
+}
 
 export async function editHotel (req,res){
   try {
@@ -90,6 +140,18 @@ try {
 }
 
 }
+export async function getAllRoom(req,res){
+
+try {
+    console.log("object in back")
+    const Rooms=await roomSchema.find({})
+    return res.send(Rooms)
+} catch (error) {
+    console.log(error)
+    return res.status(400).json({message:error})
+}
+
+}
 export async function login(req,res){
     console.log(req.body,"before")
     try {
@@ -102,7 +164,7 @@ export async function login(req,res){
         .send({ message: "admin does not exist", success: false });
       }
       const isMatch = await bcrypt.compare(req.body.Password, user.password);
-      if (isMatch && user.isActive ) {
+      if (isMatch && user.isAdmin ) {
         if(user.isAdmin){
           
           console.log("inside MATCH")

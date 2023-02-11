@@ -4,6 +4,7 @@ import jwt from 'jsonwebtoken';
 import userSchema from '../models/userModel.js';
 import authMiddleware from '../middlewares/authMiddleware.js';
 import hotelSchema from '../models/hotelModel.js';
+import  roomSchema  from '../models/roomModel.js';
 
 export async function register(req,res){
   try {
@@ -47,15 +48,10 @@ export async function login(req,res){
     const isMatch = await bcrypt.compare(req.body.Password, user.password);
     if (isMatch && user.isActive ) {
       if(user.isAdmin){
-        
-        console.log("inside MATCH")
-        console.log("isadmin")
-        const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
-          expiresIn: "1d",
-        });
-        res
+        console.log("!user")
+        return res
         .status(200)
-        .send({ message: "Login successful",success:true,isAdmin:true, data: token });
+        .send({ message: "user does not exist", success: false });
       }else{
         console.log("inside MATCH")
         console.log("isUser")
@@ -135,5 +131,19 @@ export async function hotelDetails (req,res){
     return res.send(data)
   } catch (error) {
     
+  }
+}
+export async function roomDetails (req,res){
+  console.log("11111111111111111")
+  const hotelId=req.params
+  console.log(hotelId,"Iddss")
+  try {
+    const data=await roomSchema.find({
+      Id:hotelId})
+    console.log("2222222222222222")
+    console.log(data,"data of room bY Hotel id ")
+    return res.send(data)
+  } catch (error) {
+    console.log(error)
   }
 }

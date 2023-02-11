@@ -7,14 +7,18 @@ import cors from 'cors'
 import connect from "./database/config.js";
 
 app.use(express.json());
-app.use(cors())
-// import userRoute from './routes/userRoute'
-// const userRoute = require("./routes/userRoute")
-import userRouter from "./routes/userRoute.js";
-// import adminRouter from './routes/adminRoute.js'
 
-// import router from "./routes/adminRoute";
-// const adminRouter = require("./routes/adminRoute.js")
+
+let corsOption = {
+    origin: "http://localhost:3000",
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
+  };
+app.use(cors(corsOption))
+
+
+
+import userRouter from "./routes/userRoute.js";
+
 import adminRouter from "./routes/adminRoute.js"
 
 const port = process.env.PORT || 5000;

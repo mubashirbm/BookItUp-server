@@ -6,10 +6,13 @@ const router = express.Router()
 import * as controller from '../controllers/adminController.js';
 import authMiddleware from '../middlewares/authMiddleware.js';
 import hotelModel from '../models/hotelModel.js';
+import userModel, { userSchema } from '../models/userModel.js';
 
 
 router.route("/addHotel").post(controller.addHotel)
+router.route("/addRoom/:Id").put(controller.addRoom)
 router.route("/getAllHotel").get(controller.getAllHotel)
+router.route("/getAllRoom").get(controller.getAllRoom)
 router.route("/login").post(controller.login)
 // router.route("delete").post(controller.delete)
 
@@ -18,6 +21,7 @@ router.route("/getAllUser").get(controller.getUsers)
 router.route('/changeStatus/:status/:userId').get(controller.changeStatus)
 router.route("/getAllUsers").get(controller.getUsers)
 router.route('/deleteHotel/:hotelId').post(controller.deleteHotel)
+router.route('/deleteRoom/:roomId').post(controller.deleteRoom)
 router.route('/getHotelById/:hotelId').get(controller.hotelById)
 router.route('/updateHotel').post(controller.updateHotel)
 
@@ -25,7 +29,7 @@ router.route('/updateHotel').post(controller.updateHotel)
 
 
 
-export default router
+// export default router
 
 
 
@@ -104,3 +108,36 @@ export default router
 //         })
 //     }
 // })
+
+router.post("/admin/get-admin-info-by-id",authMiddleware, async(req,res)=>{
+    try {
+        console.log("mmmmmmmmmmmmmmmmmmm")
+      const user = await userModel.findOne({_id:req.body.userId})
+      user.password = undefined;
+      if(!user){
+        return res
+        .status(200)
+        .send({message:"admin does not exixt",success:false})
+      }if(user){
+        if(user.isAdmin){
+            res.status(200).send({success:true,
+              data:user
+            })
+        }else{
+            return res
+        .status(200)
+        .send({message:"admin does not exixt",success:false})
+        }
+      }else{
+        return res
+        .status(200)
+        .send({message:"admin does not exixt",success:false})
+      }
+    } catch (error) {
+      res.status(500)
+      .send({message:"error getting user info",success:false, error})
+    }
+  })
+  
+  export default router;
+  
