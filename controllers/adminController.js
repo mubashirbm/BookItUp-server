@@ -10,15 +10,16 @@ import mongoose from 'mongoose';
 export async function addHotel(req,res){
   console.log(req.body,6666666666);
     try {
-        const exist=hotelSchema.findOne({name:req.body.hotel})
+      console.log("777777777777777777")
+        const exist=await hotelSchema.findOne({hotel:req.body.hotel})
         console.log(exist,"mmmmmmm")
         
-        if(!exist){
+        if(exist){
             return res
             .status(200)
             .send({ message: "Hotel already exists", success: false });
-        }if(exist){
-
+        }else{
+console.log("888888888888888888888")
             console.log(req.body,"add hotel")
             const newhotel = new hotelSchema(req.body)
             console.log(newhotel,"newHotel")

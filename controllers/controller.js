@@ -135,11 +135,11 @@ export async function hotelDetails (req,res){
 }
 export async function roomDetails (req,res){
   console.log("11111111111111111")
-  const hotelId=req.params
+  const hotelId=req.params.Id
   console.log(hotelId,"Iddss")
   try {
     const data=await roomSchema.find({
-      Id:hotelId})
+      hotelId:hotelId})
     console.log("2222222222222222")
     console.log(data,"data of room bY Hotel id ")
     return res.send(data)
