@@ -16,7 +16,8 @@ export const roomSchema= new mongoose.Schema({
           // required: true,
         },
         images:[],
-        roomNumbers: [{ number: Number, unavailableDates: {type: [Date]}}],
+       
+        unavailableRoom:[]
       },
 {
     timestamps:true

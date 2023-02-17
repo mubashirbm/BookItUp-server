@@ -12,6 +12,8 @@ router.route("/login").post(controller.login)
 router.route("/getHotelByCity/:city").get(controller.getHotelByCity)
 router.route("/hotelDetails/:Id").get(controller.hotelDetails)
 router.route("/RoomDetails/:Id").get(controller.roomDetails)
+router.route("/updateDate/:Id").patch(controller.addDate)
+router.route("/checkDate/:Id").post(controller.checkDate)
 
 
 

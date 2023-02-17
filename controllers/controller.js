@@ -1,12 +1,12 @@
 // import UserModel from '../models/userModel.js'
-import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
-import userSchema from '../models/userModel.js';
-import authMiddleware from '../middlewares/authMiddleware.js';
-import hotelSchema from '../models/hotelModel.js';
-import  roomSchema  from '../models/roomModel.js';
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
+import userSchema from "../models/userModel.js";
+import authMiddleware from "../middlewares/authMiddleware.js";
+import hotelSchema from "../models/hotelModel.js";
+import roomSchema from "../models/roomModel.js";
 
-export async function register(req,res){
+export async function register(req, res) {
   try {
     console.log(req.body);
     const userExist = await userSchema.findOne({ email: req.body.email });
@@ -15,78 +15,77 @@ export async function register(req,res){
         .status(200)
         .send({ message: "user already exists", success: false });
     }
-    const password = req.body.password; 
+    const password = req.body.password;
 
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
     req.body.password = hashedPassword;
     const newuser = new userSchema(req.body);
-console.log(newuser,"newUser")
+    console.log(newuser, "newUser");
     await newuser.save();
     res
       .status(200)
       .send({ message: "user created successfully", success: true });
   } catch (error) {
-    console.log(error)
+    console.log(error);
     res
       .status(500)
       .send({ message: "user already exists", success: false, error });
   }
 }
 
-export async function login(req,res){
-  console.log(req.body,"before")
+export async function login(req, res) {
+  console.log(req.body, "before");
   try {
     const user = await userSchema.findOne({ email: req.body.email });
-    console.log(user,"user")
+    console.log(user, "user");
     if (!user) {
-      console.log("!user")
+      console.log("!user");
       return res
-      .status(200)
-      .send({ message: "user does not exist", success: false });
-    }
-    const isMatch = await bcrypt.compare(req.body.Password, user.password);
-    if (isMatch && user.isActive ) {
-      if(user.isAdmin){
-        console.log("!user")
-        return res
         .status(200)
         .send({ message: "user does not exist", success: false });
-      }else{
-        console.log("inside MATCH")
-        console.log("isUser")
+    }
+    const isMatch = await bcrypt.compare(req.body.Password, user.password);
+    if (isMatch && user.isActive) {
+      if (user.isAdmin) {
+        console.log("!user");
+        return res
+          .status(200)
+          .send({ message: "user does not exist", success: false });
+      } else {
+        console.log("inside MATCH");
+        console.log("isUser");
         const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
           expiresIn: "1d",
         });
-          res
+        res
           .status(200)
-          .send({ message: "Login successful",success:true, data: token });
-          
-        }
+          .send({ message: "Login successful", success: true, data: token });
       }
-      // if (isMatch && user.isActive) {
-        //   console.log("inside MATCH")
-        //   const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
-          //     expiresIn: "1d",
-          //   });
-          //   res
-          //     .status(200)
-          //     .send({ message: "Login successful", success: true, admin:false, data: token });
+    }
+    // if (isMatch && user.isActive) {
+    //   console.log("inside MATCH")
+    //   const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
+    //     expiresIn: "1d",
+    //   });
+    //   res
+    //     .status(200)
+    //     .send({ message: "Login successful", success: true, admin:false, data: token });
     // }
     else if (isMatch && !user.isActive) {
       return res
-      .status(200)
-      .send({ message: "You are blocked from this site", success: false });
+        .status(200)
+        .send({ message: "You are blocked from this site", success: false });
     } else {
       return res
-      .status(200)
-      .send({ message: "password incorrect", success: false });
+        .status(200)
+        .send({ message: "password incorrect", success: false });
     }
   } catch (error) {
     console.log(error);
     res
-    .status(500)
-    .send({ message: "error logging in", success: false, error });
+      .status(500)
+      .send({ message: "error logging in", success: false, error });
   }
 }
 // export async function authMiddleware(req,res){
@@ -108,42 +107,103 @@ export async function login(req,res){
 //   }
 
 // }
-export async function getHotelByCity (req,res){
-  console.log(req.params.city,"body")
-  const city=req.params.city
-try {
-  const data= await hotelSchema.find({location:city}) 
-  console.log(data)
-  return res.send(data)
-} catch (error) {
-  console.log(error)
-  
-  
-}
-  
-}
-export async function hotelDetails (req,res){
-  const Id=req.params.Id
-  console.log(Id,"Idd")
+export async function getHotelByCity(req, res) {
+  console.log(req.params.city, "body");
+  const city = req.params.city;
   try {
-    const data=await hotelSchema.findOne({_id:Id})
-    console.log(data,"after Id ")
-    return res.send(data)
+    const data = await hotelSchema.find({ location: city });
+    console.log(data);
+    return res.send(data);
   } catch (error) {
+    console.log(error);
+  }
+}
+export async function hotelDetails(req, res) {
+  const Id = req.params.Id;
+  console.log(Id, "Idd");
+  try {
+    const data = await hotelSchema.findOne({ _id: Id });
+    console.log(data, "after Id ");
+    return res.send(data);
+  } catch (error) {}
+}
+export async function roomDetails(req, res) {
+  console.log("11111111111111111");
+  const hotelId = req.params.Id;
+  console.log(hotelId, "Iddss");
+  try {
+    const data = await roomSchema.find({
+      hotelId: hotelId,
+    });
+    console.log("2222222222222222");
+    console.log(data, "data of room bY Hotel id ");
+    return res.send(data);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function addDate(req, res) {
+  console.log("update Room Backend");
+  const hotelId = req.params.Id;
+  console.log(req.params);
+  const dates = req.body;
+  console.log(dates, "dates");
+  try {
+    const data = await roomSchema.findOne({ _id: hotelId });
+     data.unavailableRoom = [...data.unavailableRoom, ...dates]
+     data.save()
+    console.log(data, "roooom");
+    // console.log(first)
+   
+    res.send(data);
+  } catch (error) {
+    console.log(error);
+  }
+}
+export async function checkDate(req, res) {
+  console.log("check Room Backend");
+  const hotelId = req.params.Id;
+  console.log(req.params);
+  const dates = req.body
+  console.log(dates, "date2222s");
+  try {
+    const data = await roomSchema.findOne({ _id: hotelId });
     
+    console.log(dates,"dates")
+    console.log("unavilqqqq room",data.unavailableRoom)
+
+function compareArrays(arr1, arr2) {
+    for (let i = 0; i < arr1.length; i++) {
+      if (arr2.includes(arr1[i])) {
+        return false;
+      }
+    }
+    return true;
   }
-}
-export async function roomDetails (req,res){
-  console.log("11111111111111111")
-  const hotelId=req.params.Id
-  console.log(hotelId,"Iddss")
-  try {
-    const data=await roomSchema.find({
-      hotelId:hotelId})
-    console.log("2222222222222222")
-    console.log(data,"data of room bY Hotel id ")
-    return res.send(data)
+
+const status = compareArrays(data.unavailableRoom,dates)
+console.log(status,"statukjhk")
+
+    res.send(status);
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
 }
+
+// export async function roomCheck(req,res){
+//   console.log(11111111111111)
+
+//   const Id=req.params.roomId
+//   console.log(Id,'roomId')
+//   console.log(req.body,'dates')
+//   try {
+//     const data=await roomSchema.findOne({_id:Id})
+//     console.log(data,"data");
+//     const h = unavailableRoom.find((data)=>data===data.h)
+
+//     console.log(data)
+//   } catch (error) {
+
+//   }
+// }
