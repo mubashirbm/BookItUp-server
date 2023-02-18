@@ -5,6 +5,7 @@ import userSchema from "../models/userModel.js";
 import authMiddleware from "../middlewares/authMiddleware.js";
 import hotelSchema from "../models/hotelModel.js";
 import roomSchema from "../models/roomModel.js";
+import  bookSchema from "../models/bookingModel.js";
 
 export async function register(req, res) {
   try {
@@ -189,6 +190,48 @@ console.log(status,"statukjhk")
   } catch (error) {
     console.log(error);
   }
+}
+
+
+
+export async function bookRoom(req,res){
+  console.log(req.body,6666666666);
+  console.log(req.body,"body Room")
+  console.log(req.params,"params Room")
+  const room=req.body
+  const dates=req.body.UA
+  const hotelId=req.params.Id
+  console.log(room,"Room")
+  console.log(hotelId,"hotelId")
+    try {
+      const data = await roomSchema.findOne({ _id: hotelId });
+   data.unavailableRoom = [...data.unavailableRoom, ...dates]
+   data.save()
+  console.log(data, "roooom");
+  
+      const newBook = new bookSchema(req.body)
+      console.log(newBook,"newRoom")
+      await newBook.save()
+      // try {
+        // });
+        res.send({message:"Booked Succesfully"})
+        
+      // } 
+        // const exist=hotelSchema.findOne({name:req.body.Room})
+        // console.log(exist,"mmmmmmm")
+        
+        // if(!exist){
+            // return res
+            // .status(200)
+            // .send({ message: "Hotel already exists", success: false });
+        // }if(exist){
+
+        // }
+        
+    } catch (error) {
+        console.log(error)
+        return res.status(400).json({error})
+    }
 }
 
 // export async function roomCheck(req,res){
