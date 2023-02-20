@@ -6,16 +6,17 @@ import authMiddleware from "../middlewares/authMiddleware.js";
 import hotelSchema from "../models/hotelModel.js";
 import roomSchema from "../models/roomModel.js";
 import  bookSchema from "../models/bookingModel.js";
+import nodemailer from 'nodemailer'
 
 export async function register(req, res) {
   try {
     console.log(req.body);
-    const userExist = await userSchema.findOne({ email: req.body.email });
-    if (userExist) {
-      return res
-        .status(200)
-        .send({ message: "user already exists", success: false });
-    }
+    // const userExist = await userSchema.findOne({ email: req.body.email });
+    // if (userExist) {
+      // return res
+        // .status(200)
+        // .send({ message: "user already exists", success: false });
+    // }
     const password = req.body.password;
 
     const salt = await bcrypt.genSalt(10);
@@ -233,6 +234,58 @@ export async function bookRoom(req,res){
         return res.status(400).json({error})
     }
 }
+
+
+
+export async function mailer (req,res){
+  const mail=req.body.email
+  console.log(mail,"maile")
+  console.log(req.body,"reqqqqq")
+  try {
+
+    let transporter = nodemailer.createTransport({
+    // let config={
+      service:'gmail',
+      auth: {
+        user: 'mohdmubashirbm@gmail.com', // generated ethereal user
+        pass: process.env.PASSWORD, // generated ethereal password
+      },
+    // }
+    
+    // let transporter=nodemailer.createTransport(config)
+    // res.status(201).json("email send successfully")
+    });
+
+
+    let randomNum = Math.floor(Math.random() * 10000).toString();
+
+console.log(randomNum);
+
+    let info ={
+      from: 'mohdmubashirbm@gmail.com', // sender address
+      to: "mohdmubashirbm@gmail.com", // list of receivers
+      subject: 'Book It Up Otp Verification',
+      text: randomNum , // plain text body
+
+    };
+  
+ transporter.sendMail(info,(err)=>{
+  if(err){
+    console.log(err)
+  }else{
+    console.log("email send")
+  }
+  return res.send(info)
+ })
+
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+
+
+
 
 // export async function roomCheck(req,res){
 //   console.log(11111111111111)

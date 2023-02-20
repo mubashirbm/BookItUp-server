@@ -3,6 +3,7 @@ import dotenv  from "dotenv"
 const app = express()
 dotenv.config()
 import cors from 'cors'
+// import nodemailer from 'nodemailer'
 
 import connect from "./database/config.js";
 

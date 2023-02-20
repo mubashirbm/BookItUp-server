@@ -15,6 +15,7 @@ router.route("/RoomDetails/:Id").get(controller.roomDetails)
 router.route("/updateDate/:Id").patch(controller.addDate)
 router.route("/checkDate/:Id").post(controller.checkDate)
 router.route("/bookRoom/:Id").post(controller.bookRoom)
+router.route("/sendEmail").post(controller.mailer)
 
 
 

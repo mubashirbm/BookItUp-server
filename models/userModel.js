@@ -15,10 +15,7 @@ export const userSchema = new mongoose.Schema({
         type:String,
         required:true
     },
-    isDoctor:{
-        type: Boolean,
-        default:false
-    },
+ 
     isActive:{
         type:Boolean,
         default:true
@@ -26,14 +23,6 @@ export const userSchema = new mongoose.Schema({
     isAdmin:{
         type:Boolean,
         default:false
-    },
-    seenNotifications:{
-        type:Array,
-        default:[]
-    },
-    unseenNotifications:{
-        type:Array,
-        default:[]
     },
   
 },{
