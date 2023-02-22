@@ -239,31 +239,39 @@ export async function bookRoom(req,res){
 
 export async function mailer (req,res){
   const mail=req.body.email
-  console.log(mail,"maile")
+  // console.log(mail,"maile")
   console.log(req.body,"reqqqqq")
+ 
+ 
+ 
+ 
+ 
   try {
+    console.log(mail,"maile")
+     const userExist = await userSchema.findOne({ email: req.body.email });
+    if (userExist) {
+      return res
+        .status(200)
+        .send({ message: "user already exists", success: false });
+    }
 
     let transporter = nodemailer.createTransport({
-    // let config={
+  
       service:'gmail',
       auth: {
-        user: 'mohdmubashirbm@gmail.com', // generated ethereal user
+        user: process.env.EMAIL, // generated ethereal user
         pass: process.env.PASSWORD, // generated ethereal password
       },
-    // }
     
-    // let transporter=nodemailer.createTransport(config)
-    // res.status(201).json("email send successfully")
     });
 
 
     let randomNum = Math.floor(Math.random() * 10000).toString();
-
-console.log(randomNum);
+console.log(randomNum,"gfdgf");
 
     let info ={
       from: 'mohdmubashirbm@gmail.com', // sender address
-      to: "mohdmubashirbm@gmail.com", // list of receivers
+      to: mail, // list of receivers
       subject: 'Book It Up Otp Verification',
       text: randomNum , // plain text body
 
