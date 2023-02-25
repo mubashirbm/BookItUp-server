@@ -10,13 +10,18 @@ import connect from "./database/config.js";
 app.use(express.json());
 
 
-let corsOption = {
-    // origin: "http://localhost:3000",
-    origin: "https://www.bookitup.fitzone.fun",
-    methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
-  };
-app.use(cors(corsOption))
+// let corsOption = {
+//     // origin: "http://localhost:3000",
+//     origin: "https://www.bookitup.fitzone.fun",
+//     methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
+//   };
+// app.use(cors(corsOption))
 
+const corsOptions = {
+    origin: '*',
+    methods: 'GET,POST,PUT,PATCH,DELETE'
+  };
+  app.use(cors(corsOptions));
 
 
 import userRouter from "./routes/userRoute.js";
