@@ -16,13 +16,20 @@ app.use(express.json());
 //   };
 // app.use(cors(corsOption))
 
-const corsOptions = {
-  origin: "*",
-  methods: "GET,POST,PUT,PATCH,DELETE",
-  httpOnly: false
-};
-app.use(cors(corsOptions));
-
+// const corsOptions = {
+//   origin: "*",
+//   methods: "GET,POST,PUT,PATCH,DELETE",
+//   httpOnly: false
+// };
+// app.use(cors(corsOptions));
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "https://www.bookitup.fitzone.fun");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
+  next();
+});
 import userRouter from "./routes/userRoute.js";
 
 import adminRouter from "./routes/adminRoute.js";
