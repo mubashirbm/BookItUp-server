@@ -22,14 +22,17 @@ app.use(express.json());
 //   httpOnly: false
 // };
 // app.use(cors(corsOptions));
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "https://www.bookitup.fitzone.fun");
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept"
-  );
-  next();
-});
+app.use(cors());
+
+// app.use((req, res, next) => {
+//   res.header("Access-Control-Allow-Origin", "https://www.bookitup.fitzone.fun");
+//   res.header(
+//     "Access-Control-Allow-Headers",
+//     "Origin, X-Requested-With, Content-Type, Accept"
+//   );
+//   next();
+// });
+
 import userRouter from "./routes/userRoute.js";
 
 import adminRouter from "./routes/adminRoute.js";
