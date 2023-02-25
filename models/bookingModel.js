@@ -5,6 +5,9 @@ export const bookSchema= new mongoose.Schema({
         type:String,
        
     },
+    userId:{
+        type:String
+    },
     roomId:{
         type:String,
        

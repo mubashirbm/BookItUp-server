@@ -6,6 +6,7 @@ import roomSchema from '../models/roomModel.js';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import mongoose from 'mongoose';
+import bookSchema from '../models/bookingModel.js';
 
 export async function addHotel(req,res){
   console.log(req.body,6666666666);
@@ -46,7 +47,7 @@ export async function addRoom(req,res){
       // try {
         await hotelSchema.findByIdAndUpdate(hotelId, {
           $push: { rooms: newRoom._id },
-        });
+        }); 
         res.send({message:"new Room added succesfully"})
         
       // } 
@@ -264,4 +265,15 @@ export async function login(req,res){
       }
     
   } 
+
+  export const getAllBookings =async (req,res)=>{
+try {
+  const data=await bookSchema.find({})
+  console.log(data,'ALL HOTELS')
+  res.send(data)
+} catch (error) {
+  console.log(error)
+}
+
+  }
   

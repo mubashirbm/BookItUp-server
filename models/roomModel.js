@@ -15,6 +15,26 @@ export const roomSchema= new mongoose.Schema({
           type: String,
           // required: true,
         },
+        bed: {
+          type: String,
+          // required: true,
+        },
+        laundry: {
+          type: String,
+          // required: true,
+        },
+        AC: {
+          type: String,
+          // required: true,
+        },
+        wifi: {
+          type: String,
+          // required: true,
+        },
+        userId: {
+          type: String,
+          // required: true,
+        },
         images:[],
        
         unavailableRoom:[]

@@ -25,6 +25,8 @@ router.route('/deleteRoom/:roomId').post(controller.deleteRoom)
 router.route('/getHotelById/:hotelId').get(controller.hotelById)
 router.route('/updateHotel').post(controller.updateHotel)
 
+router.route('/getAllBooking').get(controller.getAllBookings)
+
 
 
 

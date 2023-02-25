@@ -11,6 +11,7 @@ app.use(express.json());
 
 
 let corsOption = {
+    // origin: "http://localhost:3000",
     origin: "https://bookitup.fitzone.fun",
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
   };

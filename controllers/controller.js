@@ -62,7 +62,7 @@ export async function login(req, res) {
         });
         res
           .status(200)
-          .send({ message: "Login successful", success: true, data: token });
+          .send({ message: "Login successful", success: true, data: token, user:user });
       }
     }
     // if (isMatch && user.isActive) {
