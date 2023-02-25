@@ -12,7 +12,7 @@ app.use(express.json());
 
 let corsOption = {
     // origin: "http://localhost:3000",
-    origin: "https://bookitup.fitzone.fun",
+    origin: "https://www.bookitup.fitzone.fun",
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
   };
 app.use(cors(corsOption))
