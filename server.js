@@ -10,8 +10,8 @@ import connect from "./database/config.js";
 app.use(express.json());
 
 let corsOption = {
-    // origin: "*",
-    origin: "https://www.bookitup.fitzone.fun",
+    origin: "*",
+    // origin: "https://www.bookitup.fitzone.fun",
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE","HEAD"],
     credentials: true,  
     exposedHeaders: ["Content-Length", "X-Foo", "X-Bar"],
