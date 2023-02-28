@@ -12,7 +12,7 @@ app.use(express.json());
 let corsOption = {
     // origin: "*",
     origin: "https://www.bookitup.fitzone.fun",
-    methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE","HEAD"],
   };
 app.use(cors(corsOption))
 
