@@ -13,6 +13,8 @@ let corsOption = {
     // origin: "*",
     origin: "https://www.bookitup.fitzone.fun",
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE","HEAD"],
+    credentials: true,  
+    exposedHeaders: ["Content-Length", "X-Foo", "X-Bar"],
   };
 app.use(cors(corsOption))
 
