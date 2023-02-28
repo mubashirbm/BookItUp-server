@@ -2,21 +2,24 @@ import express from "express";
 import dotenv from "dotenv";
 const app = express();
 dotenv.config();
-import cors from "cors";
+// import cors from "cors";
 // import nodemailer from 'nodemailer'
 
 import connect from "./database/config.js";
 
 app.use(express.json());
+const CORS = require("cors");
 
-let corsOption = {
-    origin: "*",
-    // origin: "https://www.bookitup.fitzone.fun",
-    methods: ["GET", "POST", "PUT", "PATCH", "DELETE","HEAD"],
+app.use(
+  CORS({
+    // origin: ["http://localhost:3000"],
+  origin:"*",
+    methods: ["GET", "POST", "PUT", "DELETE","HEAD", "OPTIONS"],
     credentials: true,  
     exposedHeaders: ["Content-Length", "X-Foo", "X-Bar"],
-  };
-app.use(cors(corsOption))
+
+  })
+);
 
 // const corsOptions = {
 //   origin: "*",
