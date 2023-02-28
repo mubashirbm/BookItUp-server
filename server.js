@@ -9,12 +9,12 @@ import connect from "./database/config.js";
 
 app.use(express.json());
 
-// let corsOption = {
-//     // origin: "http://localhost:3000",
-//     origin: "https://www.bookitup.fitzone.fun",
-//     methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
-//   };
-// app.use(cors(corsOption))
+let corsOption = {
+    // origin: "*",
+    origin: "https://www.bookitup.fitzone.fun",
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
+  };
+app.use(cors(corsOption))
 
 // const corsOptions = {
 //   origin: "*",
@@ -22,7 +22,6 @@ app.use(express.json());
 //   httpOnly: false
 // };
 // app.use(cors(corsOptions));
-app.use(cors());
 
 // app.use((req, res, next) => {
 //   res.header("Access-Control-Allow-Origin", "https://www.bookitup.fitzone.fun");
