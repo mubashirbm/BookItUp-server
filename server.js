@@ -11,7 +11,7 @@ app.use(express.json());
 
 let corsOption = {
     // origin: "*",
-    origin: "https://bookitup.fitzone.fun",
+    origin: "https://www.bookitup.fitzone.fun",
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE","HEAD"],
   };
 app.use(cors(corsOption))
