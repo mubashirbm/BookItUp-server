@@ -15,7 +15,7 @@ app.use(
     origin: ["https://bookitup.fitzone.fun", "https://www.bookitup.fitzone.fun"],
     methods: ["GET", "POST", "PUT", "DELETE", "HEAD", "OPTIONS"],
     credentials: true,
-    exposedHeaders: ["Content-Length", "X-Foo", "X-Bar"],
+
   })
 );
 
