@@ -12,16 +12,13 @@ const CORS = require("cors");
 
 app.use(
   CORS({
-    // origin: ["http://localhost:3000"],
-  origin:["https://bookitup.fitzone.fun,https://www.bookitup.fitzone.fun"],
-    methods: ["GET", "POST", "PUT", "DELETE","HEAD", "OPTIONS"],
-    credentials: true,  
+    origin: ["https://bookitup.fitzone.fun", "https://www.bookitup.fitzone.fun"],
+    methods: ["GET", "POST", "PUT", "DELETE", "HEAD", "OPTIONS"],
+    credentials: true,
     exposedHeaders: ["Content-Length", "X-Foo", "X-Bar"],
-    // Access-Control-Allow-Origin: ["https://bookitup.fitzone.fun","https://www.bookitup.fitzone.fun"]
-
-
   })
 );
+
 
 // const corsOptions = {
 //   origin: "*",
