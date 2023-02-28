@@ -8,16 +8,14 @@ dotenv.config();
 import connect from "./database/config.js";
 
 app.use(express.json());
-const CORS = require("cors");
+const cors = require('cors');
 
-app.use(
-  CORS({
-    origin: ["https://bookitup.fitzone.fun", "https://www.bookitup.fitzone.fun"],
-    methods: ["GET", "POST", "PUT", "DELETE", "HEAD", "OPTIONS"],
-    credentials: true,
+// const app = express();
 
-  })
-);
+app.use(cors({
+  origin: 'https://www.bookitup.fitzone.fun'
+}));
+
 
 
 // const corsOptions = {
