@@ -1,5 +1,6 @@
 import express from "express";
 import dotenv from "dotenv";
+import cors from "cors"
 const app = express();
 dotenv.config();
 // import cors from "cors";
@@ -8,7 +9,6 @@ dotenv.config();
 import connect from "./database/config.js";
 
 app.use(express.json());
-const cors = require('cors');
 
 // const app = express();
 
