@@ -38,7 +38,7 @@ import userRouter from "./routes/userRoute.js";
 
 import adminRouter from "./routes/adminRoute.js";
 
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 5500;
 
 /** api routes */
 app.use("/api", userRouter);
