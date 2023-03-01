@@ -13,7 +13,7 @@ app.use(express.json());
 // const app = express();
 
 app.use(cors({
-  origin: 'https://main.d5c2jgyll0rez.amplifyapp.com'
+  origin: 'https://bookitup.fitzone.fun'
 }));
 
 
