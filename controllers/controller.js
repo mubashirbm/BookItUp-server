@@ -37,10 +37,10 @@ export async function register(req, res) {
 }
 
 export async function login(req, res) {
-  console.log(req.body, "before");
+  // console.log(req.body, "before");
   try {
     const user = await userSchema.findOne({ email: req.body.email });
-    console.log(user, "user");
+    // console.log(user, "user");
     if (!user) {
       console.log("!user");
       return res
@@ -291,6 +291,19 @@ console.log(randomNum,"gfdgf");
   }
 }
 
+
+export const getMyBookings= async (req,res)=>{
+  try {
+    console.log(req.params,"ID ")
+    const Id=req.params.Id
+    console.log(Id,"IDDDDDDD")
+    const data = await bookSchema.find({userId:Id})
+    console.log(data,"2222222222222222222222")
+    return res.send(data)
+  } catch (error) {
+    console.log(error)
+  }
+}
 
 
 

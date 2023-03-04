@@ -31,6 +31,11 @@ export const bookSchema= new mongoose.Schema({
     total:{
         type:Number
     },
+    status:{
+        type:Boolean,
+        default:true
+    },
+   
     
     UA:[],
    

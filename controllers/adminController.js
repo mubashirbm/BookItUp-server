@@ -67,6 +67,48 @@ export async function addRoom(req,res){
         return res.status(400).json({error})
     }
 }
+export async function updateRoom(req,res){
+  console.log(req.body,6666666666);
+  console.log(req.body,"body Room")
+  console.log(req.params,"params Room")
+  const room=req.body
+  const roomId=req.params.Id
+    try {
+      console.log("22222222222222222222222")
+
+      // try {
+        const data = await roomSchema.findByIdAndUpdate(roomId,room,{new:true}); 
+        console.log(data,"edited room")
+        res.send({room,message:"Room updated succesfully"})
+        
+     
+        
+    } catch (error) {
+        console.log(error)
+        return res.status(400).json({error})
+    }
+}
+export async function updatHotel(req,res){
+  console.log(req.body,6666666666);
+  console.log(req.body,"body Room")
+  console.log(req.params,"params Room")
+  const hotel=req.body
+  const Id=req.params.Id
+    try {
+      console.log("22222222222222222222222")
+
+      // try {
+        const data = await hotelSchema.findByIdAndUpdate(Id,hotel,{new:true}); 
+        console.log(data,"edited Hotel")
+        res.send({data,message:"Hotel updated succesfully"})
+        
+     
+        
+    } catch (error) {
+        console.log(error)
+        return res.status(400).json({error})
+    }
+}
 
 export async function hotelById(req,res){
   console.log("reeeech")
@@ -117,19 +159,7 @@ export async function deleteRoom(req,res){
   }
 }
 
-export async function editHotel (req,res){
-  try {
-    const editHotel=await Hotel.findById(req.params.id,
-      {
-$set:req.body
-      }
-      )
-      res.status(200).json(updateHotel)
-  } catch (error) {
-    res.status(500).json(error)
-    
-  }
-}
+
 export async function getAllHotel(req,res){
 
 try {
@@ -158,6 +188,7 @@ export async function login(req,res){
     console.log(req.body,"before")
     try {
       const user = await userSchema.findOne({ email: req.body.email });
+      const name=await userSchema.findOne({ email: req.body.email });
       console.log(user,"usegffr")
       if (!user) {
         console.log("!user")
@@ -171,13 +202,13 @@ export async function login(req,res){
           
           console.log("inside MATCH")
           console.log("isAdmin")
-          const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
+          const adminToken = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
               expiresIn: "1d",
             });
-            console.log(token,"token")
+            console.log(adminToken,"adminToken")
           res
           .status(200)
-          .send({ message: "Login successful",success:true,isAdmin:true, data: token });
+          .send({ message: "Login successful",success:true,isAdmin:true, data: adminToken ,name:name});
         }
         }
         // if (isMatch && user.isActive) {
@@ -276,4 +307,69 @@ try {
 }
 
   }
+
+
+
+  export const getUserChart = async (req,res)=>{
+    try {
+      const result = await bookSchema.aggregate([
+        {
+          $group: {
+            _id: { $month: '$date' },
+            bookings: { $sum: 1 },
+          },
+        },
+        {
+          $sort: {
+            _id: 1,
+          },
+        },
+      ]);
+      const bookings = result.map((r) => r.bookings);
+      const months = result.map((r) => getMonthName(r._id));
+      console.log(bookings,months)
+      res.json({ bookings, months });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Server error' });
+    }
+  } 
+  function getMonthName(month) {
+    const date = new Date(Date.UTC(0, month - 1, 1));
+    return date.toLocaleString('en-US', { month: 'long' });
+  }
+
+  export const revenueChart =async (req,res)=>{
+    try {
+      const bookings = await bookSchema.aggregate([
+        // {
+        //   $match: {
+        //     status: 'paid',
+        //   },
+        // },
+        {
+          $group: {
+            _id: {
+              $dateToString: { format: '%Y-%m', date: '$createdAt' },
+            },
+            revenue: {
+              $sum: '$total',
+            },
+          },
+        },
+        {
+          $sort: {
+            _id: 1,
+          },
+        },
+      ]);
   
+      const months = bookings.map(booking => booking._id);
+      const revenue = bookings.map(booking => booking.revenue);
+  
+      res.json({ months, revenue });
+    }  catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Server Error' });
+    }
+  }

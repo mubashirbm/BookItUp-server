@@ -16,6 +16,7 @@ router.route("/updateDate/:Id").patch(controller.addDate)
 router.route("/checkDate/:Id").post(controller.checkDate)
 router.route("/bookRoom/:Id").post(controller.bookRoom)
 router.route("/sendEmail").post(controller.mailer)
+router.route("/getMyBookings/:Id").get(controller.getMyBookings)
 
 
 
@@ -100,11 +101,12 @@ router.route("/sendEmail").post(controller.mailer)
 // router.route("/get-user-info-by-id").post(controller.authMiddleware)
 
 router.post("/get-user-info-by-id",authMiddleware, async(req,res)=>{
-  console.log("000000000000000000000000")
+  // console.log("000000000000000000000000")
   try {
+    console.log(req.body,"req.body")
     const user = await userModel.findOne({_id:req.body.userId})
     user.password = undefined;
-    if(!user){
+    if(!user){  
       return res
       .status(200)
       .send({message:"user does not exixt",success:false})
@@ -118,43 +120,23 @@ router.post("/get-user-info-by-id",authMiddleware, async(req,res)=>{
     .send({message:"error getting user info",success:false, error})
   }
 })
-router.post("/get-admin-info-by-id",authMiddleware, async(req,res)=>{
-  console.log("000000000000000000000000")
-  try {
-    const user = await userModel.findOne({_id:req.body.userId})
-    user.password = undefined;
-    if(!user){
-      return res
-      .status(200)
-      .send({message:"user does not exixt",success:false})
-    }else{
-      res.status(200).send({success:true,
-        data:user
-      })
-    }
-  } catch (error) {
-    res.status(500)
-    .send({message:"error getting user info",success:false, error})
-  }
-})
-router.post('/update-profile',authMiddleware,async(req,res)=>{
-  try {
-      const updateImage=req.body.imageUpdate
-      console.log(updateImage);
-      const user=await userModel.findOne({_id:req.body.userId})
-
-      if(!user){
-          return res.status(200).send({message:"Userr does not exist",success:false})
-      }else{
-          user.image=updateImage
-          await user.save()
-          res.status(200).send({message:"update profile successfully",success:true})
-      }
-
-  } catch (error) {
-      res.status(500).send({
-          message:"Error getting user-info",success:false,error
-      })
-  }
-})
+// router.post("/get-admin-info-by-id",authMiddleware, async(req,res)=>{
+//   console.log("000000000000000000000000")
+//   try {
+//     const user = await userModel.findOne({_id:req.body.userId})
+//     user.password = undefined;
+//     if(!user){
+//       return res
+//       .status(200)
+//       .send({message:"user does not exixt",success:false})
+//     }else{
+//       res.status(200).send({success:true,
+//         data:user
+//       })
+//     }
+//   } catch (error) {
+//     res.status(500)
+//     .send({message:"error getting user info",success:false, error})
+//   }
+// })
 export default router;

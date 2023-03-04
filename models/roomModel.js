@@ -4,6 +4,9 @@ export const roomSchema= new mongoose.Schema({
         hotelId:{
           type:String
         },
+        hotelName:{
+          type:String
+        },
         room: {
           type: String,
           // required: true,
