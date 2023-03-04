@@ -37,10 +37,10 @@ export async function register(req, res) {
 }
 
 export async function login(req, res) {
-  // console.log(req.body, "before");
+  console.log(req.body, "before");
   try {
     const user = await userSchema.findOne({ email: req.body.email });
-    // console.log(user, "user");
+    console.log(user, "user");
     if (!user) {
       console.log("!user");
       return res
