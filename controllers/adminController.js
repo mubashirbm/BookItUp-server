@@ -315,20 +315,22 @@ try {
       const result = await bookSchema.aggregate([
         {
           $group: {
-            _id: { $month: '$date' },
+            _id: { 
+              $dateToString: { format: '%Y-%m', date: '$createdAt' },
+            },
             bookings: { $sum: 1 },
-          },
         },
+      },
         {
           $sort: {
             _id: 1,
           },
         },
       ]);
-      const bookings = result.map((r) => r.bookings);
-      const months = result.map((r) => getMonthName(r._id));
-      console.log(bookings,months)
-      res.json({ bookings, months });
+      const months = result.map(booking => booking._id);
+      const booking = result.map(booking => booking.bookings);;
+      console.log(booking,months)
+      res.json({months,booking });
     } catch (error) {
       console.error(error);
       res.status(500).json({ error: 'Server error' });

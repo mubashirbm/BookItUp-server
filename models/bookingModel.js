@@ -8,6 +8,9 @@ export const bookSchema= new mongoose.Schema({
     userId:{
         type:String
     },
+    hotelName:{
+        type:String
+    },
     roomId:{
         type:String,
        
@@ -20,6 +23,14 @@ export const bookSchema= new mongoose.Schema({
         type:String,
     
     },
+    CheckInDate:{
+        type:String,
+    
+    },
+    CheckOutDate:{
+        type:String,
+    
+    },
     email:{
         type:String
         
@@ -29,6 +40,9 @@ export const bookSchema= new mongoose.Schema({
         
     },
     total:{
+        type:Number
+    },
+    adults:{
         type:Number
     },
     status:{
