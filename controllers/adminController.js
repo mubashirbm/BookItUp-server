@@ -237,6 +237,7 @@ export async function login(req,res){
     }
   }
   export async function getUsers(req,res){
+    console.log(req.body.userId,"shibli")
     try {
       const response=await userSchema.find({})
       res.status(200).send(response);
@@ -256,6 +257,27 @@ export async function login(req,res){
           {
             $set: {
               isActive: status,
+            },
+          }
+        )
+        console.log(result);
+          res.status(200).json({ status: true , result });
+        // .then((data) => {
+          // }).catch((err) => {console.log(err,'err');})
+        } catch (error) {
+      console.log(error);
+    }
+  };
+  export const changeBookingStatus =async (req,res) => {
+    console.log(req.params,"aaaaaa")
+    const { status, userId } = req.params;
+    try {
+    const result = await bookSchema
+        .updateOne(
+          { _id: userId },
+          {
+            $set: {
+              status: status,
             },
           }
         )
@@ -342,6 +364,8 @@ try {
   }
 
   export const revenueChart =async (req,res)=>{
+    console.log(req.body.userId,"shibli")
+    console.log(req.body)
     try {
       const bookings = await bookSchema.aggregate([
         // {
@@ -375,3 +399,17 @@ try {
       res.status(500).json({ message: 'Server Error' });
     }
   }
+
+export const getBookedRoom = async (req,res)=>{
+  const Id=req.params.Id
+ try {
+  
+  //  const data=await bookSchema.findOne({roomId:Id})
+  const data=await bookSchema.find({roomId:Id}).populate("roomId")
+   console.log(data,"j")
+    res.send(data)
+ } catch (error) {
+  console.log(error)
+ }
+
+}

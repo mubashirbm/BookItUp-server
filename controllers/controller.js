@@ -36,6 +36,30 @@ export async function register(req, res) {
   }
 }
 
+export async function verifyOtp(req,res){
+  // console.log(req.query,'OTP CHECK')
+  // console.log(req.body,'OTP CHECK')
+  const otp=req.body.otp
+  const OTP=req.app.locals.OTP
+  // console.log(req.app.locals.OTP,"localvariable")
+  console.log(OTP,"OTP")
+  console.log(otp,"OOTTPP")
+  try {
+    if(otp===OTP){
+      return res
+      .status(200)
+      .send({ message: "Otp success", success: true });
+    }else{
+      return res
+      .status(200)
+      .send({ message: "Otp incorrect", success: false });
+    }
+  } catch (error) {
+    console.log(error)
+  }
+  
+}
+
 export async function login(req, res) {
   console.log(req.body, "before");
   try {
@@ -241,11 +265,6 @@ export async function mailer (req,res){
   const mail=req.body.email
   // console.log(mail,"maile")
   console.log(req.body,"reqqqqq")
- 
- 
- 
- 
- 
   try {
     console.log(mail,"maile")
      const userExist = await userSchema.findOne({ email: req.body.email });
@@ -267,6 +286,13 @@ export async function mailer (req,res){
 
 
     let randomNum = Math.floor(Math.random() * 10000).toString();
+    // export const generateOtp :RequestHandler =  (req,res,next) => {
+      req.app.locals.OTP = randomNum
+      
+      // console.log(req.app.locals.OTP );
+      // res.status(201).json({code : req.app.locals.OTP})
+  
+
 console.log(randomNum,"gfdgf");
 
     let info ={
@@ -281,8 +307,10 @@ console.log(randomNum,"gfdgf");
   if(err){
     console.log(err)
   }else{
+    // console.log(req.app.locals.OTP,"local variable")
     console.log("email send")
   }
+  // console.log(req.app.locals.OTP,"local variable")
   return res.send(info)
  })
 
@@ -297,7 +325,7 @@ export const getMyBookings= async (req,res)=>{
     console.log(req.params,"ID ")
     const Id=req.params.Id
     console.log(Id,"IDDDDDDD")
-    const data = await bookSchema.find({userId:Id})
+    const data = await bookSchema.find({userId:Id}).populate("roomId")
     console.log(data,"2222222222222222222222")
     return res.send(data)
   } catch (error) {

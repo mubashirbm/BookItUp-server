@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose, { isValidObjectId } from "mongoose";
 
 export const bookSchema= new mongoose.Schema({
     name:{
@@ -12,7 +12,8 @@ export const bookSchema= new mongoose.Schema({
         type:String
     },
     roomId:{
-        type:String,
+        type: mongoose.Schema.Types.ObjectId,
+        ref : 'Room'
        
     },
     checkin:{

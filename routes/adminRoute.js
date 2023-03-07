@@ -9,27 +9,30 @@ import hotelModel from '../models/hotelModel.js';
 import userModel, { userSchema } from '../models/userModel.js';
 
 
-router.route("/addHotel").post(controller.addHotel)
-router.route("/addRoom/:Id").put(controller.addRoom)
+router.route("/addHotel").post(authMiddleware,controller.addHotel)
+router.route("/addRoom/:Id").put(authMiddleware,controller.addRoom)
 router.route("/getAllHotel").get(controller.getAllHotel)
-router.route("/updateRoom/:Id").put(controller.updateRoom)
-router.route("/getAllRoom").get(controller.getAllRoom)
+router.route("/updateRoom/:Id").put(authMiddleware,controller.updateRoom)
+router.route("/getAllRoom").get(authMiddleware,controller.getAllRoom)
 router.route("/login").post(controller.login)
 // router.route("delete").post(controller.delete)
 
 
-router.route("/getAllUser").get(controller.getUsers)
-router.route('/changeStatus/:status/:userId').get(controller.changeStatus)
-router.route("/getAllUsers").get(controller.getUsers)
-router.route('/deleteHotel/:hotelId').post(controller.deleteHotel)
-router.route('/deleteRoom/:roomId').post(controller.deleteRoom)
-router.route('/getHotelById/:hotelId').get(controller.hotelById)
-router.route('/updateHotel/:Id').put(controller.updatHotel)
+router.route("/getAllUser").get(authMiddleware,controller.getUsers)
+router.route('/changeStatus/:status/:userId').get(authMiddleware,controller.changeStatus)
+router.route('/changeBookingStatus/:status/:userId').get(authMiddleware,controller.changeBookingStatus)
+router.route("/getAllUsers").get(authMiddleware,controller.getUsers)
+router.route('/deleteHotel/:hotelId').post(authMiddleware,controller.deleteHotel)
+router.route('/deleteRoom/:roomId').post(authMiddleware,controller.deleteRoom)
+router.route('/getHotelById/:hotelId').get(authMiddleware,controller.hotelById)
+router.route('/updateHotel/:Id').put(authMiddleware,controller.updatHotel)
 
-router.route('/getAllBooking').get(controller.getAllBookings)
-
-router.get("/getChart", controller.getUserChart)
-router.get("/getrevenue",controller.revenueChart)
+router.route('/getAllBooking').get(authMiddleware,controller.getAllBookings)
+router.route("/getChart").get(authMiddleware, controller.getUserChart)
+router.route("/getrevenue").get(authMiddleware,controller.revenueChart)
+router.route('/getRoomById/:Id').get(authMiddleware,controller.getBookedRoom)
+// router.get("/getChart",authMiddleware, controller.getUserChart)
+// router.get("/getrevenue",controller.revenueChart)
 
 
 

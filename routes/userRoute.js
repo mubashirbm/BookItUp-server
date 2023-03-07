@@ -4,18 +4,20 @@ const router = express.Router();
 import * as controller from '../controllers/controller.js';
 import userModel from '../models/userModel.js';
 import authMiddleware from '../middlewares/authMiddleware.js';
+import {localVariables} from '../middlewares/authMiddleware.js';
 
 
 
 router.route("/register").post(controller.register)
+router.route('/verify').post(controller.verifyOtp)
 router.route("/login").post(controller.login)
-router.route("/getHotelByCity/:city").get(controller.getHotelByCity)
+router.route("/getHotelByCity/:city").get(authMiddleware,controller.getHotelByCity)
 router.route("/hotelDetails/:Id").get(controller.hotelDetails)
 router.route("/RoomDetails/:Id").get(controller.roomDetails)
 router.route("/updateDate/:Id").patch(controller.addDate)
 router.route("/checkDate/:Id").post(controller.checkDate)
 router.route("/bookRoom/:Id").post(controller.bookRoom)
-router.route("/sendEmail").post(controller.mailer)
+router.route("/sendEmail").post(localVariables,controller.mailer)
 router.route("/getMyBookings/:Id").get(controller.getMyBookings)
 
 
