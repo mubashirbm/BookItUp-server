@@ -13,8 +13,8 @@ app.use(express.json());
 // const app = express();
 
 app.use(cors({
-  origin: 'https://www.bookitup.fitzone.fun',
-  // origin: 'http://localhost:3000',
+  // origin: 'https://www.bookitup.fitzone.fun',
+  origin: 'http://localhost:3000',
   methods: ["GET", "POST", "PUT", "DELETE","HEAD", "OPTIONS"],
   credentials: true,  
   exposedHeaders: ["Content-Length", "X-Foo", "X-Bar"],
