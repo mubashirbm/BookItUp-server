@@ -50,6 +50,10 @@ export const bookSchema= new mongoose.Schema({
         type:Boolean,
         default:true
     },
+    canceled:{
+        type:Boolean,
+        default:false
+    },
    
     
     UA:[],

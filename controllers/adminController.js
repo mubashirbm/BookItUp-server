@@ -413,3 +413,21 @@ export const getBookedRoom = async (req,res)=>{
  }
 
 }
+export const getBookingTotal=async (req,res)=>{
+  try {
+    const data=await bookSchema.countDocuments()
+    res.send(data)
+    console.log(data,"nothing")
+  } catch (error) {
+    console.log(error)
+  }
+}
+export const getCanceled =async(req,res)=>{
+  try {
+    const data=await bookSchema.countDocuments({canceled:true})
+    console.log(data,"canceled")
+    res.send(data)
+  } catch (error) {
+    
+  }
+}

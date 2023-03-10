@@ -31,6 +31,8 @@ router.route('/getAllBooking').get(authMiddleware,controller.getAllBookings)
 router.route("/getChart").get(authMiddleware, controller.getUserChart)
 router.route("/getrevenue").get(authMiddleware,controller.revenueChart)
 router.route('/getRoomById/:Id').get(authMiddleware,controller.getBookedRoom)
+router.route('/getBookingTotal').get(controller.getBookingTotal)
+router.route('/getCanceled').get(controller.getCanceled)
 // router.get("/getChart",authMiddleware, controller.getUserChart)
 // router.get("/getrevenue",controller.revenueChart)
 
