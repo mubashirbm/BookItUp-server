@@ -8,7 +8,7 @@ import authMiddleware from '../middlewares/authMiddleware.js';
 import hotelModel from '../models/hotelModel.js';
 import userModel, { userSchema } from '../models/userModel.js';
 
-import upload from '../middlewares/multer.js';
+
 
 
 router.route("/addHotel").post(authMiddleware,controller.addHotel)
