@@ -333,6 +333,28 @@ export const getMyBookings= async (req,res)=>{
   }
 }
 
+export const cancelStatus =async (req,res) => {
+  console.log(req.params,"aaaaaa")
+  const roomId  = req.params.roomId;
+  try {
+  const result = await bookSchema
+      .updateOne(
+        { roomId: roomId },
+        {
+          $set: {
+            canceled: true,
+          },
+        }
+      )
+      console.log(result);
+        res.status(200).json(result);
+      // .then((data) => {
+        // }).catch((err) => {console.log(err,'err');})
+      } catch (error) {
+    console.log(error);
+  }
+};
+
 
 
 

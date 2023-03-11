@@ -8,6 +8,8 @@ import authMiddleware from '../middlewares/authMiddleware.js';
 import hotelModel from '../models/hotelModel.js';
 import userModel, { userSchema } from '../models/userModel.js';
 
+import upload from '../middlewares/multer.js';
+
 
 router.route("/addHotel").post(authMiddleware,controller.addHotel)
 router.route("/addRoom/:Id").put(authMiddleware,controller.addRoom)
@@ -31,8 +33,10 @@ router.route('/getAllBooking').get(authMiddleware,controller.getAllBookings)
 router.route("/getChart").get(authMiddleware, controller.getUserChart)
 router.route("/getrevenue").get(authMiddleware,controller.revenueChart)
 router.route('/getRoomById/:Id').get(authMiddleware,controller.getBookedRoom)
-router.route('/getBookingTotal').get(controller.getBookingTotal)
-router.route('/getCanceled').get(controller.getCanceled)
+router.route('/getBookingTotal').get(authMiddleware,controller.getBookingTotal)
+router.route('/getCanceled').get(authMiddleware,controller.getCanceled)
+router.route('/totalRevenue').get(authMiddleware,controller.getTotalRevenue)
+router.route('/totalUser').get(authMiddleware,controller.totalUser)
 // router.get("/getChart",authMiddleware, controller.getUserChart)
 // router.get("/getrevenue",controller.revenueChart)
 

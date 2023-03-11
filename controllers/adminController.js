@@ -9,7 +9,8 @@ import mongoose from 'mongoose';
 import bookSchema from '../models/bookingModel.js';
 
 export async function addHotel(req,res){
-  console.log(req.body,6666666666);
+  // console.log(req.body,6666666666);
+  console.log(req.file,'kgkjGSDS')
     try {
       console.log("777777777777777777")
         const exist=await hotelSchema.findOne({hotel:req.body.hotel})
@@ -336,6 +337,11 @@ try {
     try {
       const result = await bookSchema.aggregate([
         {
+          $match: {
+            canceled: false,
+          },
+        },
+        {
           $group: {
             _id: { 
               $dateToString: { format: '%Y-%m', date: '$createdAt' },
@@ -368,11 +374,11 @@ try {
     console.log(req.body)
     try {
       const bookings = await bookSchema.aggregate([
-        // {
-        //   $match: {
-        //     status: 'paid',
-        //   },
-        // },
+        {
+          $match: {
+            canceled: false,
+          },
+        },
         {
           $group: {
             _id: {
@@ -415,8 +421,8 @@ export const getBookedRoom = async (req,res)=>{
 }
 export const getBookingTotal=async (req,res)=>{
   try {
-    const data=await bookSchema.countDocuments()
-    res.send(data)
+    const data=await bookSchema.countDocuments({canceled:false})
+    res.json(data)
     console.log(data,"nothing")
   } catch (error) {
     console.log(error)
@@ -426,8 +432,40 @@ export const getCanceled =async(req,res)=>{
   try {
     const data=await bookSchema.countDocuments({canceled:true})
     console.log(data,"canceled")
-    res.send(data)
+    res.json(data)
   } catch (error) {
+    
+  }
+}
+export const getTotalRevenue = async (req,res)=>{
+  try {
+    const data=await bookSchema.aggregate([{
+      $match:{
+        canceled:false
+      },
+    },{$group:{
+      _id:null,
+      total:{
+        $sum:"$total"
+      }
+    }}
+  ])
+let total=data[0].total
+console.log(total,"TOTAL")
+  // console.log(data[1].total,"TOTAL")
+  res.json(data[0].total)
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+export const totalUser =async(req,res)=>{
+  try {
+    const data= await userSchema.countDocuments()
+    console.log(data,"TOTAL USERS")
+    res.json(data)
+  } catch (error) {
+    console.log(error)
     
   }
 }

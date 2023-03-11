@@ -19,6 +19,7 @@ router.route("/checkDate/:Id").post(authMiddleware,controller.checkDate)
 router.route("/bookRoom/:Id").post(authMiddleware,controller.bookRoom)
 router.route("/sendEmail").post(localVariables,controller.mailer)
 router.route("/getMyBookings/:Id").get(authMiddleware,controller.getMyBookings)
+router.route('/cancelStatus/:roomId').get(authMiddleware,controller.cancelStatus)
 
 
 
